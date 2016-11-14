@@ -1,5 +1,5 @@
 // State object
-var state = {
+const state = {
   questions: [
     {
       text: "Which number am I thinking of?",
@@ -52,12 +52,12 @@ var setRoute = (state, route) => state.route = route;
 
 var resetGame = state => {
   state.score = 0;
-  state.currentQuestionIndex = 0;
+   state.currentQuestionIndex = 0;
   setRoute(state, 'start');
 };
 
 var answerQuestion = (state, answer) => {
-  var currentQuestion = state.questions[state.currentQuestionIndex];
+  let currentQuestion = state.questions[state.currentQuestionIndex];
   state.lastAnswerCorrect = currentQuestion.correctChoiceIndex === answer;
   if (state.lastAnswerCorrect) {
     state.score++;
@@ -81,9 +81,8 @@ var advance = state => {
 // Render functions
 var renderApp = (state, elements) => {
   // default to hiding all routes, then show the current route
-  Object.keys(elements).forEach(function(route) {
-    elements[route].hide();
-  });
+  Object.keys(elements).forEach((route) => elements[route].hide()
+);
   elements[state.route].show();
 
   if (state.route === 'start') {
@@ -124,23 +123,23 @@ var renderFinalFeedbackPage = (state, element) => {
 };
 
 var renderQuestionCount = (state, element) => {
-  var text = (state.currentQuestionIndex + 1) + "/" + state.questions.length;
+  let text = (state.currentQuestionIndex + 1) + "/" + state.questions.length;
   element.text(text);
 };
 
 var renderQuestionText = (state, element) => {
-  var currentQuestion = state.questions[state.currentQuestionIndex];
+  let currentQuestion = state.questions[state.currentQuestionIndex];
   element.text(currentQuestion.text);
 };
 
 var renderChoices = (state, element) => {
-  var currentQuestion = state.questions[state.currentQuestionIndex];
-  var choices = currentQuestion.choices.map(function(choice, index) {
+  let currentQuestion = state.questions[state.currentQuestionIndex];
+  var choices = currentQuestion.choices.map((choice, index) => {
     return (
-      '<li>' +
-        `<input type="radio" name="user-answer" value=" ${index} " required>` +
-        `<label> ${choice} </label>` +
-      '</li>'
+      `<li> 
+        <input type="radio" name="user-answer" value=" ${index} " required> 
+        <label> ${choice} </label>
+      </li>`
     );
   });
   element.html(choices);
@@ -167,8 +166,8 @@ var renderNextButtonText = (state, element) => {
 };
 
 var renderFinalFeedbackText = (state, element) => {
-  var text = "You got " + state.score + " out of " +
-    state.questions.length + " questions right.";
+  var text = `You got   ${state.score}   out of  
+    ${state.questions.length}   questions right.`;
   element.text(text);
 };
 
@@ -194,7 +193,7 @@ $(".restart-game").click(event =>{
 
 $("form[name='current-question']").submit(event => {
   event.preventDefault();
-  var answer = $("input[name='user-answer']:checked").val();
+  let answer = $("input[name='user-answer']:checked").val();
   answer = parseInt(answer, 10);
   answerQuestion(state, answer);
   renderApp(state, PAGE_ELEMENTS);
@@ -205,4 +204,4 @@ $(".see-next").click(event => {
   renderApp(state, PAGE_ELEMENTS);
 });
 
-$(function() { renderApp(state, PAGE_ELEMENTS); });
+$(  () => { renderApp(state, PAGE_ELEMENTS); });
